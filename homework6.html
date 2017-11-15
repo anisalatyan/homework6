@@ -56,6 +56,7 @@
           [' ', ' ', ' '],
           [' ', ' ', ' ']
         ];
+
         const nextMove = function(arr, isX) { 
             for(let dambldor = 0; dambldor < arr.length; dambldor++) {
               for(let hagrid = 0; hagrid < arr.length; hagrid++) {
@@ -65,7 +66,6 @@
               }
 			  
             }
-         // }
         }
         
         const makeMove = function(board, location, isX) {
@@ -88,7 +88,6 @@
               return {
                 winner: board[i][1],
                 winningLocations: [[i, 0], [i, 1], [i, 2]], 
-                
               }
               
             }
@@ -156,10 +155,41 @@
 				alert(findWinner(board).winner);
 			  }
 		});
-          
-	
-        
-        
-        
-         
-      </script>
+
+  // The Diamonds function
+
+  const diamond = function(num, char) {
+  if(num%2 === 0) {
+    num = num + 1
+  }
+    const chare = function(inp) {
+        if (inp <= 0) {
+            return "";
+        } else {
+            return char + chare(inp - 1);
+        }
+    }
+    const space = function(inp) {
+        if (inp <= 0) {
+            return "";
+        } else {
+            return " " + space(inp - 1);
+        }
+    }
+    const final = function(n, spaceN, charN) {
+        if (n > num) {
+            return "";
+        } else {
+            console.log(space(spaceN) + chare(charN));
+        }
+        if(n < num/2) {
+          final(n+1, spaceN-1, charN+2);
+        } else {
+          final(n+1, spaceN+1, charN-2);
+        }
+      }
+    final(1, (num-1)/2, 1);
+  }
+  diamond(7, "*");
+
+	</script>
