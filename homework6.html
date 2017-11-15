@@ -56,8 +56,7 @@
           [' ', ' ', ' '],
           [' ', ' ', ' ']
         ];
-        const nextMove = function(arr, isX) { //gtnum e coordinates, stuguma azat tex, vor ira coordinate nere ta, u dni meje x 
-          //if(isX) {
+        const nextMove = function(arr, isX) { 
             for(let dambldor = 0; dambldor < arr.length; dambldor++) {
               for(let hagrid = 0; hagrid < arr.length; hagrid++) {
                 if(board[dambldor][hagrid] === ' ') {
@@ -70,8 +69,7 @@
         }
         
         const makeMove = function(board, location, isX) {
-		//console.log(location, "aaa")
-          if(location[0] >= 0 && location[0] <= 2 && location[1] >= 0 && location[1] <= 2 ) { //dashtic durs enq ekel, te che, teturn enq anum -1 ete sxal location a , location  arajin tive, arajine uxixna stugum, erb stuga erkrod tive, ed nerqevinna stugum(|), ete x-i hertna-dnuma x, 0-n stuguma horizonakane(--), heto stuguma uxxahayac (|)
+          if(location[0] >= 0 && location[0] <= 2 && location[1] >= 0 && location[1] <= 2 ) {
             if(isX) {
               board[location[0]][location[1]] = "x";
             } else {
@@ -86,10 +84,10 @@
           for(let i = 0; i < board.length; i++) {
             if(board[i][0]=== board[i][1] && board[i][0] === board[i][2] && board[i][0] !== ' ')
 
-			{//stugum enq, vor arajine datark chlini, 0,0 nenq stugum, 
-              return { //return enq anum, te ova haxtel
+			{ 
+              return {
                 winner: board[i][1],
-                winningLocations: [[i, 0], [i, 1], [i, 2]], // locations of winning Xs
+                winningLocations: [[i, 0], [i, 1], [i, 2]], 
                 
               }
               
@@ -119,38 +117,17 @@
               winningLocations: [[0, 0], [1, 1], [2, 2]],
             }
           }
-          if(board.toString().search(/([xo],){8}[xo]/) !== -1){ //regeks
+          if(board.toString().search(/([xo],){8}[xo]/) !== -1){
             return {
               winner: "nobody"
             }
           }
         };
 		
-        /* 
-		=
-		
-if(board.toString()include(" ")) {
-			return {
-			winner: "None",
-		};
-		
-		
-		
-		*/
+        
       
         let isX = true;
-        /* (6,SIMULATION)
-		
-		
-        while(true){
-        makeMove(board, nextMove(board, true), isX);
-        if(findWinner(board)) {
-        console.log(findWinner(board).winner); //x u o -irar hetevic anuma, true i depqum x, false i depqum o
-        break;
-        }
-        isX = !isX;
-        }*/
-		
+
         
         
         const boardDiv  = document.getElementById("board")
@@ -162,8 +139,7 @@ if(board.toString()include(" ")) {
 		  if(findWinner(board)) {
 			alert(findWinner(board).winner + "Another Expeliarmus you did it!");
 		  }
-          //e.target.id
-          //console.log(e);
+          
 		  }
         }, false); 
 		
@@ -181,12 +157,7 @@ if(board.toString()include(" ")) {
 			  }
 		});
           
-		  
-          /* const next = nextMove(boar d);
-          console.log(next)
-          document.getElementById(next[0] + "" + next[1]).className += " O";
-            makeMove(board, nextMove(board, isX), isX);
-			*/
+	
         
         
         
