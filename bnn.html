@@ -1,0 +1,194 @@
+<html>
+  <head>
+    <style>
+      .board {
+        display: flex;
+        width: 600px;
+        height: 600px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+      
+      .square {
+        height: 200px;
+        width: 200px;
+        box-sizing: border-box;
+        border: 5px solid black;
+        font-size: 5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .square:hover {
+        cursor: pointer;
+        background-color: #cccccc;
+      }
+	  
+	  .x {
+        background-image: url("https://cdn.shopify.com/s/files/1/1000/1920/products/HpRockCandy5_600x600.png?v=1496805222");
+        background-size: 200PX;
+      }
+      .o {
+        background-image: url("https://c1-zingpopculture.eb-cdn.com.au/merchandising/images/packshots/84de72f26b8d46a7b82176b39480c4ab_Large.png");
+        background-size: 200PX;
+      }
+
+    </style>
+    <body>
+      <div id="board" class="board">
+        <div class="square" id="00"></div>
+        <div class="square" id="01"></div>
+        <div class="square" id="02"></div>
+        <div class="square" id="10"></div>
+        <div class="square" id="11"></div>
+        <div class="square" id="12"></div>
+        <div class="square" id="20"></div>
+        <div class="square" id="21"></div>
+        <div class="square" id="22"></div>
+      </div>
+      
+      <script>
+        
+        const board = [
+          [' ', ' ', ' '],
+          [' ', ' ', ' '],
+          [' ', ' ', ' ']
+        ];
+        const nextMove = function(arr, isX) { //gtnum e coordinates, stuguma azat tex, vor ira coordinate nere ta, u dni meje x 
+          //if(isX) {
+            for(let dambldor = 0; dambldor < arr.length; dambldor++) {
+              for(let hagrid = 0; hagrid < arr.length; hagrid++) {
+                if(board[dambldor][hagrid] === ' ') {
+                  return [dambldor,hagrid];
+                }
+              }
+			  
+            }
+         // }
+        }
+        
+        const makeMove = function(board, location, isX) {
+		//console.log(location, "aaa")
+          if(location[0] >= 0 && location[0] <= 2 && location[1] >= 0 && location[1] <= 2 ) { //dashtic durs enq ekel, te che, teturn enq anum -1 ete sxal location a , location  arajin tive, arajine uxixna stugum, erb stuga erkrod tive, ed nerqevinna stugum(|), ete x-i hertna-dnuma x, 0-n stuguma horizonakane(--), heto stuguma uxxahayac (|)
+            if(isX) {
+              board[location[0]][location[1]] = "x";
+            } else {
+              board[location[0]][location[1]] = "0";
+            }
+            return 0;
+          }
+          return -1;
+        }
+        
+        const findWinner = function(board) {
+          for(let i = 0; i < board.length; i++) {
+            if(board[i][0]=== board[i][1] && board[i][0] === board[i][2] && board[i][0] !== ' ')
+
+			{//stugum enq, vor arajine datark chlini, 0,0 nenq stugum, 
+              return { //return enq anum, te ova haxtel
+                winner: board[i][1],
+                winningLocations: [[i, 0], [i, 1], [i, 2]], // locations of winning Xs
+                
+              }
+              
+            }
+          }
+          
+          for(let i = 0; i < board.length; i++) {
+            if(board[0][i]=== board[1][i] && board[2][i] === board[1][i] && board[0][i] !== ' ') {
+              return {
+                winner: board[0][i],
+                winningLocations: [[0, i], [1, i], [2, i]],
+                
+              }
+            }
+          }
+          if(board[0][0] === board[1][1] && board[0][0]===board[2][2] && board[0][0] !== ' ') {
+            return {
+              winner: board[0][0],
+              winningLocations: [[0, 0], [1, 1], [2, 2]]
+            }
+			
+          }
+          
+          if(board[0][2]=== board[1][1] && board[0][2]==board[2][0]&& board[0][2]!== ' ') {
+            return {
+              winner: board[0][2],
+              winningLocations: [[0, 0], [1, 1], [2, 2]],
+            }
+          }
+          if(board.toString().search(/([xo],){8}[xo]/) !== -1){ //regeks
+            return {
+              winner: "nobody"
+            }
+          }
+        };
+		
+        /* 
+		=
+		
+if(board.toString()include(" ")) {
+			return {
+			winner: "None",
+		};
+		
+		
+		
+		*/
+      
+        let isX = true;
+        /* (6,SIMULATION)
+		
+		
+        while(true){
+        makeMove(board, nextMove(board, true), isX);
+        if(findWinner(board)) {
+        console.log(findWinner(board).winner); //x u o -irar hetevic anuma, true i depqum x, false i depqum o
+        break;
+        }
+        isX = !isX;
+        }*/
+		
+        
+        
+        const boardDiv  = document.getElementById("board")
+        boardDiv.addEventListener("mousedown", function(e) {
+		if(e.target.className === "square") {
+          e.target.className += " x";
+		  console.log(e.target.className)
+		  makeMove(board, [e.target.id[0], e.target.id[1]], true);
+		  if(findWinner(board)) {
+			alert(findWinner(board).winner + "Another Expeliarmus you did it!");
+		  }
+          //e.target.id
+          //console.log(e);
+		  }
+        }, false); 
+		
+		boardDiv.addEventListener("mouseup", function(e) {
+			console.log(400)
+			const next = nextMove(board, isX);
+			console.log(document.getElementById(next[0] + "" + next[1]).className)
+			if(document.getElementById(next[0] + "" + next[1]).className === "square") {
+				document.getElementById(next[0] + "" + next[1]).className += " o";
+				makeMove(board, next, false);
+				alert(findWinner(board).winner + "Expeliarmus!! You did it!!");
+			}
+			  if(findWinner(board)) {
+				alert(findWinner(board).winner);
+			  }
+		});
+          
+		  
+          /* const next = nextMove(boar d);
+          console.log(next)
+          document.getElementById(next[0] + "" + next[1]).className += " O";
+            makeMove(board, nextMove(board, isX), isX);
+			*/
+        
+        
+        
+         
+      </script>
